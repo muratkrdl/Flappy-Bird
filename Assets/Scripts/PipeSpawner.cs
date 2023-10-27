@@ -4,29 +4,30 @@ using UnityEngine;
 
 public class PipeSpawner : MonoBehaviour
 {
-    [SerializeField] GameObject pipePrefabs;
-    [SerializeField] float spawnPipeDelay = 3f;
-    [SerializeField] float startGameDelay = 3f;
-    [SerializeField] float ySpawnRange;
-    [SerializeField] Vector2 newPipePoint;
+    [SerializeField] float spawnDelay = 3f;
+    [SerializeField] float spawnYRange = 8;
 
-    void Start() 
+    [SerializeField] Transform pipeSpawnPoint;
+
+    [SerializeField] GameObject pipePrefab;
+
+    float selectedYPos;
+    Vector2 selectedPos;
+
+    void Start()
     {
-        StartCoroutine(SpawnPipe());
+        StartCoroutine(SpawnPipes());
     }
 
-    IEnumerator SpawnPipe()
+    IEnumerator SpawnPipes()
     {
-        yield return new WaitForSeconds(startGameDelay);
-
         while(true)
         {
-            newPipePoint.y = Random.Range(-ySpawnRange, ySpawnRange);
-
-            var pipe = Instantiate(pipePrefabs);
-            pipe.transform.position = newPipePoint;
-
-            yield return new WaitForSeconds(spawnPipeDelay);
+            yield return new WaitForSeconds(spawnDelay);
+            selectedYPos = Random.Range(-spawnYRange, spawnYRange + .01f);
+            selectedPos = new Vector2(pipeSpawnPoint.position.x, selectedYPos);
+            GameObject pipe = Instantiate(pipePrefab, transform);
+            pipe.transform.position = selectedPos;
         }
     }
 

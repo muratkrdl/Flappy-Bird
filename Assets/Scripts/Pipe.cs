@@ -4,29 +4,21 @@ using UnityEngine;
 
 public class Pipe : MonoBehaviour
 {
-    [SerializeField] float pipeMoveSpeed = 5f;
+    [SerializeField] float moveSpeed = 5;
 
-    void Start() 
-    {
-        DestroyYourself();    
-    }
+    [SerializeField] float deathSideX;
 
-    void Update() 
-    {
-        Move();    
-    }
-
-    void Move()
+    void Update()
     {
         Vector2 newPos = transform.position;
-        newPos.x += Vector2.left.x * pipeMoveSpeed * Time.deltaTime;
+        newPos.x += Vector2.left.x * moveSpeed * Time.deltaTime;
 
         transform.position = newPos;
+
+        if(transform.position.x <= deathSideX)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    void DestroyYourself()
-    {
-        Destroy(gameObject, 15f);
-    }
-    
 }
