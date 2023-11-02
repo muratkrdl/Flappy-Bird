@@ -1,5 +1,5 @@
 
-# Falppy-Bird
+# Flappy-Bird
 
 
 # Gameplay
